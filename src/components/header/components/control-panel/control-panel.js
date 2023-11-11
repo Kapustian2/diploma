@@ -1,34 +1,28 @@
 import { Link } from "react-router-dom";
-import { UseSelector, useSelector } from "react-redux";
-import {
-  SelectUserRole,
-  selectUserId,
-  selectUserLogin,
-  selectUserSession,
-} from "../../../../selectors";
-import { ROLE } from "../../../../constants/index";
+import { useSelector } from "react-redux";
+import { SelectUserAuth, selectUserLogin } from "../../../../selectors";
 import styled from "styled-components";
 
 const ControlPanelContainer = ({ className }) => {
-  const roleId = useSelector(SelectUserRole);
-  const userId = useSelector(selectUserId);
+  const auth = useSelector(SelectUserAuth);
   const login = useSelector(selectUserLogin);
-  const session = useSelector(selectUserSession);
+
+  console.log(auth);
 
   return (
     <div className={className}>
-      {roleId === ROLE.GUEST ? (
+      {auth ? (
+        <Link to="/profile/:userId">
+          <div className="link-content">
+            <img src="/icon-person.svg" />
+            <span className="link-text">{login}</span>
+          </div>
+        </Link>
+      ) : (
         <Link to="/login">
           <div className="link-content">
             <img src="/icon-person.svg" />
             <span className="link-text">Войти</span>
-          </div>
-        </Link>
-      ) : (
-        <Link to="/profile/:userId">
-          <div className="link-content">
-            <img src="/icon-person.svg" />
-            <span className="link-text">${login}</span>
           </div>
         </Link>
       )}

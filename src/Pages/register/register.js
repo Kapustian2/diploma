@@ -1,4 +1,4 @@
-import { useDispatch, useStore, useSelector } from "react-redux";
+import { useDispatch, useSelector, useStore } from "react-redux";
 import { useForm } from "react-hook-form";
 import { Button, FormField } from "../../components";
 import { Link, Navigate } from "react-router-dom";
@@ -6,10 +6,9 @@ import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useState } from "react";
 import styled from "styled-components";
-import { SelectUserRole } from "../../selectors";
 import { setUser } from "../../actions";
 import { request } from "../../utils";
-import { ROLE } from "../../constants/role";
+import { SelectUserAuth } from "../../selectors";
 
 const regFormSchema = yup.object().shape({
   login: yup
@@ -68,8 +67,7 @@ export const RegisterContaner = ({ className }) => {
   const [serverError, setServerError] = useState(null);
 
   const store = useStore();
-
-  const roleId = useSelector(SelectUserRole);
+  const auth = useSelector(SelectUserAuth);
 
   const onSubmit = ({ login, password }) => {
     request("/register", "POST", { login, password }).then(
@@ -87,7 +85,7 @@ export const RegisterContaner = ({ className }) => {
 
   const handleBlur = () => {};
 
-  if (roleId !== ROLE.GUEST) {
+  if (auth) {
     return <Navigate to="/" />;
   }
 

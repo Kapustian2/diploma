@@ -1,13 +1,15 @@
 import { Button, FormField } from "../../components";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import * as yup from "yup";
 import styled from "styled-components";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { request } from "../../utils";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setUser } from "../../actions";
 import { useState } from "react";
+import { ROLE } from "../../constants";
+import { SelectUserAuth, SelectUserRole } from "../../selectors";
 
 const StyledLink = styled(Link)`
   text-align: center;
@@ -43,6 +45,8 @@ export const LoginContaner = ({ className }) => {
   const dispatch = useDispatch();
   const [serverError, setServerError] = useState(null);
 
+  const auth = useSelector(SelectUserAuth);
+
   const {
     register,
     handleSubmit,
@@ -69,6 +73,10 @@ export const LoginContaner = ({ className }) => {
       sessionStorage.setItem("userData", JSON.stringify(user));
     });
   };
+
+  if (auth) {
+    return <Navigate to="/" />;
+  }
 
   return (
     <div className={className}>

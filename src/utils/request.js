@@ -1,9 +1,11 @@
 export function request(url, method, data) {
-	return fetch(url, {
-		headers: {
-			'content-type': 'application/json',
-		},
-		method: method || 'GET',
-		body: data ? JSON.stringify(data) : undefined,
-	}).then((res) => res.json());
+  const BASE_URL = "http://localhost:3001";
+
+  return fetch(BASE_URL + url, {
+    headers: {
+      "content-type": "application/json",
+    },
+    method: method || "GET",
+    body: data ? JSON.stringify(data) : undefined,
+  }).then((res) => res.json());
 }

@@ -1,7 +1,7 @@
 import { Route, Routes } from "react-router-dom";
 import styled from "styled-components";
 import { Header } from "./components";
-import { Login, Main, Register } from "./Pages";
+import { Login, Main, Register, UserProfile } from "./Pages";
 
 const AppColumn = styled.div`
   display: flex;
@@ -28,7 +28,7 @@ function App() {
             path="/product/:productId"
             element={<div>Страница товара</div>}
           />
-          <Route path="/profile/:userId" element={<div>Профиль45</div>} />
+          <Route path="/profile/:userId" element={<UserProfile />} />
           <Route path="*" element={<div>Страница 404</div>} />
         </Routes>
         <Footer />
