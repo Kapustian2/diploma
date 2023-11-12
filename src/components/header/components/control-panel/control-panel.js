@@ -7,8 +7,6 @@ const ControlPanelContainer = ({ className }) => {
   const auth = useSelector(SelectUserAuth);
   const login = useSelector(selectUserLogin);
 
-  console.log(auth);
-
   return (
     <div className={className}>
       {auth ? (
