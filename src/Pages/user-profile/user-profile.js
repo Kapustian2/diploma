@@ -34,7 +34,11 @@ export const UserProfileContainer = ({ className }) => {
       <Card>
         <CardContent>
           <div className="user-info">
-            <img src="/default-avatar.jpg" className="avatar" />
+            <img
+              src="/default-avatar.jpg"
+              alt={`${userLogin} аватар`}
+              className="avatar"
+            />
             <div className="user-login">{userLogin}</div>
             <div className="user-role">{ROLE_STRINGS[userRole]}</div>
             <div className="user-createdAt">На сайте с {date}</div>
