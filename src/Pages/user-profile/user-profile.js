@@ -18,6 +18,8 @@ export const UserProfileContainer = ({ className }) => {
   const auth = useSelector(SelectUserAuth);
   const dispatch = useDispatch();
 
+  const date = Intl.DateTimeFormat("ru-RU").format(new Date(userCreatedAt));
+
   const onLogout = () => {
     dispatch(logout());
     sessionStorage.removeItem("userData");
@@ -35,7 +37,7 @@ export const UserProfileContainer = ({ className }) => {
             <img src="/default-avatar.jpg" className="avatar" />
             <div className="user-login">{userLogin}</div>
             <div className="user-role">{ROLE_STRINGS[userRole]}</div>
-            <div className="user-createdAt">На сайте с {userCreatedAt}</div>
+            <div className="user-createdAt">На сайте с {date}</div>
           </div>
         </CardContent>
         <CardFooter onClick={onLogout} className="card-footer">
@@ -52,11 +54,13 @@ export const UserProfile = styled(UserProfileContainer)`
   align-items: center;
 
   .user-info {
-    display: grid;
     place-content: center;
     height: 100%;
     text-align: center;
     padding-bottom: 155px;
+    font-family: Inter;
+    font-size: 16px;
+    padding-top: 20px;
 
     .avatar {
       border-radius: 200px;
@@ -79,6 +83,7 @@ export const UserProfile = styled(UserProfileContainer)`
   .user-login {
     padding-top: 16px;
     padding-bottom: 12px;
+    font-size: 24px;
   }
 
   .user-role {
