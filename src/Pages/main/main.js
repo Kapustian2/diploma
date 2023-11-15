@@ -1,7 +1,31 @@
 import { styled, withTheme } from "styled-components";
-import { theme } from "../../Theme";
+import { request } from "../../utils";
+import { useEffect, useState } from "react";
+import { ProductCard } from "./components";
 
 const MainContainer = ({ className }) => {
+  const [products, setProducts] = useState([]);
+  const [select, setSelect] = useState("");
+
+  const handleSelectSort = (event) => {
+    setSelect(event.target.value);
+  };
+
+  useEffect(() => {
+    request(`/products`)
+      .then((response) => {
+        if (Array.isArray(response.data)) {
+          setProducts(response.data);
+        } else {
+          console.error("Некорректный формат данных:", response);
+        }
+      })
+      .catch((error) => {
+        console.error("Ошибка запроса на сервер:", error);
+      });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+  console.log(products);
   return (
     <div className={className}>
       <div className="category">
@@ -30,37 +54,92 @@ const MainContainer = ({ className }) => {
             <span>Электроника</span>
           </div>
         </div>
+        <div className="sale-banner">
+          <img src="/sale-banner.png" alt="sale-banner"></img>
+        </div>
+      </div>
+      <div className="main-page">
+        <div className="sort-select">
+          <select id="sort" value={select} onChange={handleSelectSort}>
+            <option value="option1">Сначала дешевые</option>
+            <option value="option2">Сначала дорогие</option>
+          </select>
+        </div>
+        <div className="products">
+          {products.map(({ id, title, price, imageUrl }) => (
+            <div>
+              <ProductCard
+                key={id}
+                id={id}
+                title={title}
+                imageUrl={imageUrl}
+                price={price}
+              />
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );
 };
 
 export const Main = styled(withTheme(MainContainer))`
+  display: flex;
   text-align: center;
-  margin-top: 110px;
+  text-align: center;
+  margin-top: 90px;
+
+  .main-page {
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 20px;
+    margin-left: 20px;
+  }
 
   .categories {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     margin-left: 30px;
+    margin-top: 20px;
   }
 
   .category {
     width: 343px;
     height: 461px;
+    margin-top: 20px;
     border-radius: 0px 20px 20px 0px;
     background: #f91155;
     color: #fff;
-    margin-top: -360px;
-
     font-family: Inter;
     font-size: 24px;
   }
 
-  img {
-    margin-right: 30px;
+  .products {
+    display: flex;
+    flex-wrap: wrap;
   }
+
+  .sort-select select {
+    width: 403px;
+    height: 45px;
+    flex-shrink: 0;
+    border-radius: 10px;
+    border: 1px solid #001a34;
+    background: #f2f5f7;
+    outline: none;
+    appearance: none;
+    font-size: 16px;
+    color: #001a34;
+  }
+
+  .sale-banner {
+    width: 343px;
+    height: 459px;
+    flex-shrink: 0;
+    margin-top: 140px;
+  }
+
   h1 {
     text-align: center;
   }
