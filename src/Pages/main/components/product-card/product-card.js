@@ -1,18 +1,39 @@
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import { ButtonToAddCart } from "./components";
+import { ButtonToAddCart, CounterToCart } from "./components";
+import { useState } from "react";
 
 const ProductCardContainer = ({ className, id, title, price, imageUrl }) => {
+  const [isAddToCart, setIsAddToCart] = useState(false);
+  const [isCounterVisible, setIsCounterVisible] = useState(false);
+
+  const handleClick = () => {
+    setIsAddToCart((prevState) => !prevState);
+    setIsCounterVisible(true);
+  };
+
   return (
     <div className={className}>
       <Link to={`/product/${id}`} className="product-with-button">
-        <img src={imageUrl} alt={title} className="image"></img>
+        <img src={imageUrl} alt={title} className="image" />
         <div className="product-info">
           <div className="price">{price} ₽</div>
           <div className="title">{title}</div>
         </div>
-        <ButtonToAddCart>Добавить в корзину</ButtonToAddCart>
       </Link>
+
+      {isCounterVisible ? (
+        <CounterToCart
+          onClick={handleClick}
+          onCounterEmpty={() => setIsCounterVisible(false)}
+        >
+          Добавлено в корзину
+        </CounterToCart>
+      ) : (
+        <ButtonToAddCart onClick={handleClick}>
+          Добавить в корзину
+        </ButtonToAddCart>
+      )}
     </div>
   );
 };

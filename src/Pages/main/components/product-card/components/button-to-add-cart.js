@@ -1,9 +1,9 @@
 import { styled } from "styled-components";
 import { Button } from "../../../../../components/button/button";
 
-const ButtonToAddCartContainer = ({}) => {
+const ButtonToAddCartContainer = ({ ...props }) => {
   return (
-    <Button width="217px" height="39px" fontSize="16px">
+    <Button width="217px" height="44px" fontSize="16px" {...props}>
       <div className="text">Добавить в корзину</div>
     </Button>
   );
