@@ -1,14 +1,28 @@
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { SelectUserAuth, selectUserLogin } from "../../../../selectors";
+import {
+  SelectUserAuth,
+  SelectUserRole,
+  selectUserLogin,
+} from "../../../../selectors";
 import styled from "styled-components";
+import { ROLE } from "../../../../constants";
 
 const ControlPanelContainer = ({ className }) => {
   const auth = useSelector(SelectUserAuth);
   const login = useSelector(selectUserLogin);
+  const role = useSelector(SelectUserRole);
 
   return (
     <div className={className}>
+      {role === ROLE.ADMIN ? (
+        <Link to="/adminpanel">
+          <div className="link-content">
+            <img src="/icon-menu-admin.svg" />
+            <span className="link-text">Админ</span>
+          </div>
+        </Link>
+      ) : null}
       {auth ? (
         <Link to="/profile/:userId">
           <div className="link-content">
@@ -59,12 +73,7 @@ export const ControlPanel = styled(ControlPanelContainer)`
   }
 
   .link-text {
-    height: fit-content;
     color: #fff;
     font-family: Inter;
-    font-size: 16px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: normal;
   }
 `;

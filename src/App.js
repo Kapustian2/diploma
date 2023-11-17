@@ -1,7 +1,14 @@
 import { Route, Routes } from "react-router-dom";
 import styled from "styled-components";
 import { Header } from "./components";
-import { Login, Main, Product, Register, UserProfile } from "./Pages";
+import {
+  AdminPanel,
+  Login,
+  Main,
+  Product,
+  Register,
+  UserProfile,
+} from "./Pages";
 
 const AppColumn = styled.div`
   display: flex;
@@ -22,6 +29,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/cart" element={<div>Корзина</div>} />
+          <Route path="/adminpanel" element={<AdminPanel />} />
           <Route path="/products" element={<Product />} />
           <Route path="/product" element={<div>Новый товар</div>} />
           <Route path="/product/:productId" element={<Product />} />

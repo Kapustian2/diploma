@@ -4,3 +4,4 @@ export * from "./button/button";
 export * from "./form-field/form-field";
 export * from "./card";
 export * from "./bread-crumbs/bread-crumbs";
+export * from "./checkbox/checkbox";

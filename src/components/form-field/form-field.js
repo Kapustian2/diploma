@@ -13,6 +13,7 @@ const FormFieldContainer = forwardRef(
           {...props}
           ref={ref}
           id={id}
+          height="48px"
         />
         <span className={`error-message ${errorMessage ? "show" : ""}`}>
           {errorMessage}
@@ -42,7 +43,7 @@ export const FormField = styled(FormFieldContainer)`
     &::placeholder {
       color: red;
     }
-  } 
+  }
 
   .error-message {
     display: block;

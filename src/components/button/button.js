@@ -6,6 +6,8 @@ const ButtonContainer = ({
   width,
   height,
   fontSize,
+  background,
+  borderRadius,
   ...props
 }) => {
   return (
@@ -27,8 +29,8 @@ export const Button = styled(ButtonContainer)`
   font-size: ${({ fontSize = "16px" }) => fontSize};
 
   gap: 10px;
-  border-radius: 10px;
-  background: #005bff;
+  border-radius: ${({ borderRadius = "10px" }) => borderRadius};
+  background: ${({ background = "#005bff" }) => background};
   outline: none;
   border: none;
   .text {
