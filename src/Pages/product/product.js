@@ -3,7 +3,8 @@ import { useDispatch } from "react-redux";
 import { Link, useMatch, useParams } from "react-router-dom";
 import styled from "styled-components";
 import { loadProductAsync } from "../../actions";
-import { BreadCrumbs, Button } from "../../components";
+import { Button } from "../../components";
+import { SaleBadge } from "./components";
 
 const ProductContainer = ({ className }) => {
   const [error, setError] = useState(null);
@@ -40,18 +41,62 @@ const ProductContainer = ({ className }) => {
 
       <div className="product-info">
         <div className="product-info-left">
-          <div className="title">{product.title}</div>
+          <div className="title">
+            {product.sale ? (
+              <>
+                {" "}
+                {product.title}{" "}
+                <SaleBadge width="104px" height="49px">
+                  -20%
+                </SaleBadge>{" "}
+              </>
+            ) : (
+              <span>{product.title} </span>
+            )}
+          </div>
           <div className="category">
             <p>Категория: </p>
             {product.category}
           </div>
+          {product.sale ? (
+            <SaleBadge width="102px" height="49px">
+              Sale
+            </SaleBadge>
+          ) : null}
           <Link to="/cart">
-            <Button width="344px" height="88px" fontSize="40px">
-              Купить
-            </Button>
+            {product.sale ? (
+              <Button
+                width="344px"
+                height="88px"
+                fontSize="40px"
+                className="button-with-sale"
+              >
+                Купить
+              </Button>
+            ) : (
+              <Button
+                width="344px"
+                height="88px"
+                fontSize="40px"
+                className="button-wo-sale"
+              >
+                Купить
+              </Button>
+            )}
           </Link>
         </div>
-        <div className="price">{product.price} ₽</div>
+        <div className="price">
+          {product.sale ? (
+            <>
+              <span className="price-with-sale">
+                {(product.price * 0.8).toFixed(2)} ₽{" "}
+              </span>
+              <span className="price-wo-sale">{product.price} ₽ </span>
+            </>
+          ) : (
+            <span>{product.price} ₽</span>
+          )}
+        </div>
       </div>
     </div>
   );
@@ -69,12 +114,14 @@ export const Product = styled(ProductContainer)`
   }
   .product-info-left {
     margin-left: 60px;
-
-    Button {
-      margin-top: 362px;
-    }
+  }
+  .button-wo-sale {
+    margin-top: 362px;
   }
 
+  .button-with-sale {
+    margin-top: 313px;
+  }
   .image {
     width: 587px;
     height: 587px;
@@ -83,8 +130,10 @@ export const Product = styled(ProductContainer)`
   }
 
   .title {
+    display: flex;
     font-size: 40px;
     font-weight: 700;
+    gap: 20px;
   }
 
   .category {
@@ -102,9 +151,21 @@ export const Product = styled(ProductContainer)`
   }
 
   .price {
+    display: flex;
+    gap: 24px;
     font-size: 40px;
     font-style: normal;
     font-weight: 700;
     line-height: normal;
+
+    .price-with-sale {
+      color: #f91155;
+      font-size: 40px;
+    }
+
+    .price-wo-sale {
+      font-size: 32px;
+      text-decoration-line: line-through;
+    }
   }
 `;
