@@ -133,7 +133,12 @@ export const RegisterContaner = ({ className }) => {
               className="form-field"
             />
           </div>
-          <Button type="submit" disabled={!!formError}>
+          <Button
+            type="submit"
+            disabled={!!formError}
+            height="49px"
+            fontSize="24px"
+          >
             Зарегистрироваться
           </Button>
         </form>
@@ -206,7 +211,6 @@ export const Register = styled(RegisterContaner)`
   }
 
   Button {
-    width: 100%;
     margin-top: 20px;
   }
 

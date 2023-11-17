@@ -1,16 +1,15 @@
 import { styled } from "styled-components";
+import { Button } from "../../../../../components/button/button";
 
-const ButtonContainer = ({ children, className, width, ...props }) => {
+const ButtonToAddCartContainer = ({}) => {
   return (
-    <button className={className} {...props}>
-      <span className="text">{children}</span>
-    </button>
+    <Button width="217px" height="39px" fontSize="16px">
+      <div className="text">Добавить в корзину</div>
+    </Button>
   );
 };
 
-export const Button = styled(ButtonContainer)`
-  width: 197px;
-  height: 39px;
+export const ButtonToAddCart = styled(ButtonToAddCartContainer)`
   align-items: center;
   border-radius: 10px;
   background: #005bff;

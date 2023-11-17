@@ -1,17 +1,17 @@
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import { Button } from "./components";
+import { ButtonToAddCart } from "./components";
 
 const ProductCardContainer = ({ className, id, title, price, imageUrl }) => {
   return (
     <div className={className}>
-      <Link to={`/product/${id}`}>
+      <Link to={`/product/${id}`} className="product-with-button">
         <img src={imageUrl} alt={title} className="image"></img>
         <div className="product-info">
           <div className="price">{price} ₽</div>
           <div className="title">{title}</div>
         </div>
-        <Button>Добавить в корзину</Button>
+        <ButtonToAddCart>Добавить в корзину</ButtonToAddCart>
       </Link>
     </div>
   );
@@ -20,9 +20,14 @@ const ProductCardContainer = ({ className, id, title, price, imageUrl }) => {
 export const ProductCard = styled(ProductCardContainer)`
   display: flex;
   width: 280px;
-  margin: 20px;
+  margin-top: 20px;
   flex-direction: column;
   align-items: center;
+
+  .product-with-button {
+    display: grid;
+    justify-items: center;
+  }
 
   .title {
     color: #001a34;

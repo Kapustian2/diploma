@@ -108,7 +108,9 @@ export const LoginContaner = ({ className }) => {
               className="form-field"
             />
           </div>
-          <Button type="submit">Войти</Button>
+          <Button type="submit" height="49px" fontSize="24px">
+            Войти
+          </Button>
         </form>
         <StyledLink to="/register" className="register-bottom">
           Зарегистрироваться

@@ -46,7 +46,9 @@ const ProductContainer = ({ className }) => {
             {product.category}
           </div>
           <Link to="/cart">
-            <Button>Купить</Button>
+            <Button width="344px" height="88px" fontSize="40px">
+              Купить
+            </Button>
           </Link>
         </div>
         <div className="price">{product.price} ₽</div>
@@ -69,8 +71,6 @@ export const Product = styled(ProductContainer)`
     margin-left: 60px;
 
     Button {
-      width: 344px;
-      height: 88px;
       margin-top: 362px;
     }
   }
