@@ -2,7 +2,7 @@ import { forwardRef } from "react";
 import { styled } from "styled-components";
 
 const InputContainer = forwardRef(
-  ({ className, width, height, ...props }, ref) => {
+  ({ className, width, height, borderRadius, ...props }, ref) => {
     return (
       <>
         <input className={className} {...props} ref={ref} />
@@ -23,7 +23,7 @@ export const Input = styled(InputContainer)`
   height: ${({ height = "100%" }) => height};
   flex-direction: column;
   align-items: center;
-  border-radius: 4px;
+  border-radius: ${({ borderRadius = "4px" }) => borderRadius};
   border: 1px;
   box-sizing: border-box;
 `;
