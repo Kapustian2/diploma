@@ -19,7 +19,7 @@ export const Button = styled(ButtonContainer)`
   background: #005bff;
   outline: none;
   border: none;
-
+  // /TODO/ text
   .text {
     color: #f2f5f7;
     font-family: Inter;
