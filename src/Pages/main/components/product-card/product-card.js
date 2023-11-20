@@ -2,8 +2,16 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { ButtonToAddCart, CounterToCart } from "./components";
 import { useState } from "react";
+import { SaleBadge } from "../../../product/components";
 
-const ProductCardContainer = ({ className, id, title, price, imageUrl }) => {
+const ProductCardContainer = ({
+  className,
+  id,
+  title,
+  price,
+  sale,
+  imageUrl,
+}) => {
   const [isAddToCart, setIsAddToCart] = useState(false);
   const [isCounterVisible, setIsCounterVisible] = useState(false);
 
@@ -14,10 +22,17 @@ const ProductCardContainer = ({ className, id, title, price, imageUrl }) => {
 
   return (
     <div className={className}>
+      {sale ? (
+        <div className="sale">
+          <SaleBadge width="102px" height="49px">
+            Sale
+          </SaleBadge>
+        </div>
+      ) : null}
       <Link to={`/product/${id}`} className="product-with-button">
         <img src={imageUrl} alt={title} className="image" />
         <div className="product-info">
-          <div className="price">{price} ₽</div>
+          <div className="price">{price * 0.8} ₽ </div>
           <div className="title">{title}</div>
         </div>
       </Link>
@@ -69,6 +84,12 @@ export const ProductCard = styled(ProductCardContainer)`
     line-height: normal;
     margin-top: 8px;
     margin-bottom: 6px;
+  }
+
+  .sale {
+    position: absolute;
+    width: 217px;
+    margin-top: 10px;
   }
 
   .image {

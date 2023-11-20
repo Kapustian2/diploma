@@ -66,7 +66,7 @@ const MainContainer = ({ className }) => {
           </select>
         </div>
         <div className="products">
-          {products.map(({ id, title, price, imageUrl }) => (
+          {products.map(({ id, title, price, imageUrl, sale }) => (
             <div>
               <ProductCard
                 key={id}
@@ -74,6 +74,7 @@ const MainContainer = ({ className }) => {
                 title={title}
                 imageUrl={imageUrl}
                 price={price}
+                sale={sale}
               />
             </div>
           ))}

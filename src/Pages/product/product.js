@@ -88,9 +88,7 @@ const ProductContainer = ({ className }) => {
         <div className="price">
           {product.sale ? (
             <>
-              <span className="price-with-sale">
-                {(product.price * 0.8).toFixed(2)} ₽{" "}
-              </span>
+              <span className="price-with-sale">{product.price * 0.8} ₽ </span>
               <span className="price-wo-sale">{product.price} ₽ </span>
             </>
           ) : (
