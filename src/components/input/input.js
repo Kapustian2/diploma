@@ -5,7 +5,12 @@ const InputContainer = forwardRef(
   ({ className, width, height, borderRadius, ...props }, ref) => {
     return (
       <>
-        <input className={className} {...props} ref={ref} />
+        <input
+          className={className}
+          {...props}
+          ref={ref}
+          autoComplete="false"
+        />
       </>
     );
   }

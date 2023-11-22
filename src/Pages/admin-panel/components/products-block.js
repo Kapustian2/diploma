@@ -5,16 +5,21 @@ import { Input } from "../../../components";
 
 const ProductsBlockContainer = ({ className }) => {
   const [products, setProducts] = useState([]);
-  const [isEdit, setIsEdit] = useState(false);
+  const [isEdit, setIsEdit] = useState(products.map(() => false));
   const [inputValue, setInputValue] = useState("");
+  const [activeIndex, setActiveIndex] = useState(null);
 
   const handleInputChange = (event) => {
     setInputValue(event.target.value);
   };
 
-  const handleEdit = () => {
-    console.log("edit");
-    setIsEdit(!isEdit);
+  const handleEdit = (index) => {
+    setActiveIndex(index);
+  };
+
+  const onSave = () => {
+    setActiveIndex(null);
+    console.log("save");
   };
 
   const handleDelete = () => {
@@ -56,8 +61,8 @@ const ProductsBlockContainer = ({ className }) => {
         <span>Photo</span>
         <span>Edit</span>
       </div>
-      {products.map(({ id, title, price, category, sale, imageUrl }) => (
-        <div className="things">
+      {products.map(({ id, title, price, category, sale, imageUrl }, index) => (
+        <div className="things" key={id}>
           <Input
             className="id"
             value={`${id}`}
@@ -94,11 +99,15 @@ const ProductsBlockContainer = ({ className }) => {
             onChange={handleInputChange}
           />
           <div className="edit">
-            <img
-              src={isEdit ? "/delete-icon.svg" : "/edit-icon.svg"}
-              alt="edit-icon"
-              onClick={handleEdit}
-            />
+            {activeIndex !== index ? (
+              <img
+                src={"/edit-icon.svg"}
+                alt="edit-icon"
+                onClick={() => handleEdit(index)}
+              />
+            ) : (
+              <img src={"/delete-icon.svg"} alt="edit-icon" onClick={onSave} />
+            )}
             <img
               src="/delete-icon.svg"
               alt="delete-icon"

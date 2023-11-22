@@ -4,7 +4,7 @@ import { ROLE } from "../constants/role";
 const initialUserState = {
   id: null,
   login: null,
-  role: ROLE.GUEST,
+  role: ROLE.GUEST, // UNDO COMMET, ROLE.GUEST - IS STANDART. I CAN FORGET
   createdAt: null,
   session: null,
 };

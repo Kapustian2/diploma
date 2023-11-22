@@ -14,7 +14,6 @@ const FormFieldContainer = forwardRef(
           ref={ref}
           id={id}
           height="48px"
-          borderRadius="4px"
         />
         <span className={`error-message ${errorMessage ? "show" : ""}`}>
           {errorMessage}
@@ -25,8 +24,6 @@ const FormFieldContainer = forwardRef(
 );
 
 export const FormField = styled(FormFieldContainer)`
-  width: 100%;
-
   .input {
     width: 100%;
     border: 1px solid black;
