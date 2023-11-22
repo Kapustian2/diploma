@@ -32,7 +32,11 @@ const ProductCardContainer = ({
       <Link to={`/product/${id}`} className="product-with-button">
         <img src={imageUrl} alt={title} className="image" />
         <div className="product-info">
-          <div className="price">{price * 0.8} ₽ </div>
+          {sale ? (
+            <div className="price">{price * 0.8} ₽ </div>
+          ) : (
+            <div className="price">{price} ₽ </div>
+          )}
           <div className="title">{title}</div>
         </div>
       </Link>
