@@ -2,36 +2,43 @@ import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { request } from "../../../utils";
 import { Input } from "../../../components";
+import { useDispatch } from "react-redux";
+import { saveProductAsync } from "../../../actions";
 
 const ProductsBlockContainer = ({ className }) => {
   const [products, setProducts] = useState([]);
   const [isEdit, setIsEdit] = useState(products.map(() => false));
-  const [inputValue, setInputValue] = useState("");
   const [activeIndex, setActiveIndex] = useState(null);
 
-  const handleInputChange = (event) => {
-    setInputValue(event.target.value);
+  const dispatch = useDispatch();
+
+  const handleInputChange = (event, index, field) => {
+    const updatedProducts = [...products];
+    updatedProducts[index][field] = event.target.value;
+    setProducts(updatedProducts);
   };
 
   const handleEdit = (index) => {
     setActiveIndex(index);
+    setIsEdit(true);
   };
 
-  const onSave = () => {
+  const onSave = (id, title, price, category, imageUrl) => {
     setActiveIndex(null);
-    console.log("save");
+    setIsEdit(false);
+
+    dispatch(
+      saveProductAsync(id, {
+        title: title,
+        price: price,
+        category: category,
+        imageUrl: imageUrl,
+      })
+    );
   };
 
   const handleDelete = () => {
     console.log("delete");
-  };
-
-  const handleSale = (productId) => {
-    setProducts((prevProducts) =>
-      prevProducts.map((product) =>
-        product.id === productId ? { ...product, sale: !product.sale } : product
-      )
-    );
   };
 
   useEffect(() => {
@@ -49,7 +56,6 @@ const ProductsBlockContainer = ({ className }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  console.log(isEdit);
   return (
     <div className={className}>
       <div className="head">
@@ -65,38 +71,52 @@ const ProductsBlockContainer = ({ className }) => {
         <div className="things" key={id}>
           <Input
             className="id"
-            value={`${id}`}
+            value={id}
             borderRadius="10px"
-            onChange={handleInputChange}
+            disabled={
+              !isEdit || (activeIndex !== null && activeIndex !== index)
+            }
           />
           <Input
             className="title"
-            value={`${title}`}
+            value={title}
             borderRadius="10px"
-            onChange={handleInputChange}
+            disabled={
+              !isEdit || (activeIndex !== null && activeIndex !== index)
+            }
+            onChange={(event) => handleInputChange(event, index, "title")}
           />
           <Input
             className="category"
-            value={`${category}`}
+            value={category}
             borderRadius="10px"
-            onChange={handleInputChange}
+            disabled={
+              !isEdit || (activeIndex !== null && activeIndex !== index)
+            }
+            onChange={(event) => handleInputChange(event, index, "category")}
           />
           <Input
             className="price"
-            value={`${price}`}
+            value={price}
             borderRadius="10px"
-            onChange={handleInputChange}
+            disabled={
+              !isEdit || (activeIndex !== null && activeIndex !== index)
+            }
+            onChange={(event) => handleInputChange(event, index, "price")}
           />
 
-          <div className="sale" onClick={() => isEdit && handleSale(id)}>
+          <div className="sale" onClick={() => {}}>
             {sale ? <span>Yes</span> : <span>No</span>}
           </div>
 
           <Input
             className="imageUrl"
-            value={`${imageUrl}`}
+            value={imageUrl}
             borderRadius="10px"
-            onChange={handleInputChange}
+            disabled={
+              !isEdit || (activeIndex !== null && activeIndex !== index)
+            }
+            onChange={(event) => handleInputChange(event, index, "imageUrl")}
           />
           <div className="edit">
             {activeIndex !== index ? (
@@ -106,7 +126,13 @@ const ProductsBlockContainer = ({ className }) => {
                 onClick={() => handleEdit(index)}
               />
             ) : (
-              <img src={"/delete-icon.svg"} alt="edit-icon" onClick={onSave} />
+              <img
+                src={"/save-icon.svg"}
+                alt="save-icon"
+                onClick={() => {
+                  onSave(id, title, price, category, imageUrl);
+                }}
+              />
             )}
             <img
               src="/delete-icon.svg"
@@ -160,23 +186,23 @@ export const ProductsBlock = styled(ProductsBlockContainer)`
     .id {
       flex-direction: column;
 
-      width: 50px;
-      margin-left: 12px;
+      width: 70px;
+      margin-left: 8px;
     }
 
     .title {
-      width: 192px;
-      margin-left: 16px;
+      width: 244px;
+      margin-left: 8px;
     }
 
     .category {
-      width: 168px;
-      margin-left: 60px;
+      width: 220px;
+      margin-left: 8px;
     }
 
     .price {
-      width: 101px;
-      margin-left: 60px;
+      width: 173px;
+      margin-left: 8px;
     }
 
     .sale {
@@ -190,24 +216,25 @@ export const ProductsBlock = styled(ProductsBlockContainer)`
       justify-content: center;
       align-content: space-around;
       flex-direction: column;
-      margin-left: 80px;
+      margin-left: 8px;
       &:hover {
         cursor: ${({ disabled }) => (disabled ? "default" : "pointer")};
       }
     }
 
     .imageUrl {
-      width: 96px;
-      margin-left: 67px;
+      width: 261px;
+      margin-left: 8px;
     }
 
     .edit {
       width: 109px;
       height: 44px;
-      margin-left: 97px;
+      margin-left: 8px;
       display: flex;
       justify-content: space-between;
       border: 1px solid black;
+      border-radius: 10px;
       background-color: #f91155;
       &:hover {
         cursor: ${({ disabled }) => (disabled ? "default" : "pointer")};
@@ -216,5 +243,9 @@ export const ProductsBlock = styled(ProductsBlockContainer)`
     .sale.disabled {
       pointer-events: none;
     }
+  }
+
+  input {
+    text-align: center;
   }
 `;
