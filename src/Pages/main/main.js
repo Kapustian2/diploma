@@ -23,7 +23,7 @@ const MainContainer = ({ className, searchPhrase }) => {
       .then((response) => {
         if (response.data && Array.isArray(response.data)) {
           setProducts(response.data);
-          setLastPage(response.lastPage);
+          setLastPage(response.pagination.lastPage);
         } else {
           console.error("Некорректный формат данных:", response);
         }
