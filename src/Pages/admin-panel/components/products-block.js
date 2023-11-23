@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { request } from "../../../utils";
 import { Input } from "../../../components";
 import { useDispatch } from "react-redux";
-import { saveProductAsync } from "../../../actions";
+import { deleteProduct, saveProductAsync } from "../../../actions";
 
 const ProductsBlockContainer = ({ className }) => {
   const [products, setProducts] = useState([]);
@@ -37,8 +37,10 @@ const ProductsBlockContainer = ({ className }) => {
     );
   };
 
-  const handleDelete = () => {
-    console.log("delete");
+  const handleDelete = (id) => {
+    dispatch(deleteProduct(id)).then(() => {
+      setProducts(products.filter((product) => product.id !== id));
+    });
   };
 
   useEffect(() => {
@@ -137,7 +139,7 @@ const ProductsBlockContainer = ({ className }) => {
             <img
               src="/delete-icon.svg"
               alt="delete-icon"
-              onClick={handleDelete}
+              onClick={() => handleDelete(id)}
             />
           </div>
         </div>
