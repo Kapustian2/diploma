@@ -47,7 +47,7 @@ const ProductContainer = ({ className }) => {
                 {" "}
                 {product.title}{" "}
                 <SaleBadge width="104px" height="49px">
-                  -20%
+                  {"-" + product.sale + "%"}
                 </SaleBadge>{" "}
               </>
             ) : (
@@ -88,7 +88,9 @@ const ProductContainer = ({ className }) => {
         <div className="price">
           {product.sale ? (
             <>
-              <span className="price-with-sale">{product.price * 0.8} ₽ </span>
+              <span className="price-with-sale">
+                {(product.price * (100 - product.sale)) / 100} ₽{" "}
+              </span>
               <span className="price-wo-sale">{product.price} ₽ </span>
             </>
           ) : (

@@ -25,7 +25,7 @@ const ProductCardContainer = ({
       {sale ? (
         <div className="sale">
           <SaleBadge width="102px" height="49px">
-            Sale
+            {"-" + sale + "%"}
           </SaleBadge>
         </div>
       ) : null}
@@ -33,7 +33,7 @@ const ProductCardContainer = ({
         <img src={imageUrl} alt={title} className="image" />
         <div className="product-info">
           {sale ? (
-            <div className="price">{price * 0.8} ₽ </div>
+            <div className="price">{(price * (100 - sale)) / 100} ₽ </div>
           ) : (
             <div className="price">{price} ₽ </div>
           )}

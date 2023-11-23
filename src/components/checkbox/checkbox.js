@@ -1,21 +1,11 @@
 import { useState } from "react";
 import styled from "styled-components";
 
-const CheckBoxContainer = () => {
-  const [isChecked, setChecked] = useState(false);
-
-  const handleCheckboxChange = () => {
-    setChecked(!isChecked);
-  };
-
+const CheckBoxContainer = ({ checked, onChange }) => {
   return (
     <div>
       <label>
-        <input
-          type="checkbox"
-          checked={isChecked}
-          onChange={handleCheckboxChange}
-        />
+        <input type="checkbox" checked={checked} onChange={onChange} />
       </label>
     </div>
   );

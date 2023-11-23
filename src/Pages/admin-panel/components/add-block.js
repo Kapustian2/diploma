@@ -13,20 +13,28 @@ const productFormSchema = yup.object().shape({
     .string()
     .required("Заполните название")
     .min(3, "Минимум 5 символа")
-    .max(15, "Максимум 15 символа"),
+    .max(25, "Максимум 25 символа"),
   price: yup
     .number()
     .required("Заполните цену")
     .min(100, "Минимальная цена 100"),
   category: yup.string().required("Заполните категорию"),
-  sale: yup.boolean(),
+  sale: yup
+    .number()
+    .min(10, "Минимум 10 процентов")
+    .max(90, "Максимум 90 процентов"),
   imageUrl: yup.string().required("Укажите ссылку на фото"),
 });
 
 const AddBlockContainer = ({ className }) => {
   const [select, setSelect] = useState("");
   const [serverError, setServerError] = useState(null);
+  const [isSale, setIsSale] = useState(false);
   const dispatch = useDispatch();
+
+  const handleSaleCheckbox = () => {
+    setIsSale(!isSale);
+  };
 
   const handleSelect = (event) => {
     setSelect(event.target.value);
@@ -56,7 +64,7 @@ const AddBlockContainer = ({ className }) => {
   } = useForm({
     defaultValues: {
       price: 0,
-      sale: false,
+      sale: 0,
     },
     resolver: yupResolver(productFormSchema),
   });
@@ -108,8 +116,18 @@ const AddBlockContainer = ({ className }) => {
 
         <div className="sale">
           Товар со скидкой
-          <CheckBox />
+          <CheckBox checked={isSale} onChange={handleSaleCheckbox} />
         </div>
+        <FormField
+          type="number"
+          placeholder="Скидка"
+          disabled={!isSale}
+          {...register("sale", {
+            onChange: () => setServerError(null),
+          })}
+          errorMessage={errors?.sale?.message}
+          className="form-field"
+        />
         <Button
           type="submit"
           width="539px"
@@ -145,7 +163,7 @@ export const AddBlock = styled(AddBlockContainer)`
     display: grid;
     justify-items: center;
     height: 400px;
-    gap: 24px;
+    gap: 20px;
 
     select {
       width: 328px;
