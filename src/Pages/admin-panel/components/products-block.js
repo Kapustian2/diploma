@@ -7,7 +7,7 @@ import { deleteProduct, saveProductAsync } from "../../../actions";
 
 const ProductsBlockContainer = ({ className }) => {
   const [products, setProducts] = useState([]);
-  const [isEdit, setIsEdit] = useState(products.map(() => false));
+  const [isEdit, setIsEdit] = useState(false);
   const [activeIndex, setActiveIndex] = useState(null);
 
   const dispatch = useDispatch();
@@ -23,16 +23,20 @@ const ProductsBlockContainer = ({ className }) => {
     setIsEdit(true);
   };
 
-  const onSave = (id, title, price, category, imageUrl) => {
+  const onSave = (id, title, category, price, sale, imageUrl) => {
     setActiveIndex(null);
     setIsEdit(false);
+
+    const numericPrice = parseFloat(price);
+    const numericSale = parseFloat(sale);
 
     dispatch(
       saveProductAsync(id, {
         title: title,
-        price: price,
+        price: numericPrice,
         category: category,
         imageUrl: imageUrl,
+        sale: numericSale,
       })
     );
   };
@@ -69,7 +73,7 @@ const ProductsBlockContainer = ({ className }) => {
         <span>Photo</span>
         <span>Edit</span>
       </div>
-      {products.map(({ id, title, price, category, sale, imageUrl }, index) => (
+      {products.map(({ id, title, price, sale, category, imageUrl }, index) => (
         <div className="things" key={id}>
           <Input
             className="id"
@@ -106,10 +110,15 @@ const ProductsBlockContainer = ({ className }) => {
             }
             onChange={(event) => handleInputChange(event, index, "price")}
           />
-
-          <div className="sale" onClick={() => {}}>
-            {sale ? <span>Yes</span> : <span>No</span>}
-          </div>
+          <Input
+            className="sale"
+            value={sale}
+            borderRadius="10px"
+            disabled={
+              !isEdit || (activeIndex !== null && activeIndex !== index)
+            }
+            onChange={(event) => handleInputChange(event, index, "sale")}
+          />
 
           <Input
             className="imageUrl"
@@ -132,7 +141,7 @@ const ProductsBlockContainer = ({ className }) => {
                 src={"/save-icon.svg"}
                 alt="save-icon"
                 onClick={() => {
-                  onSave(id, title, price, category, imageUrl);
+                  onSave(id, title, category, price, sale, imageUrl);
                 }}
               />
             )}
@@ -209,19 +218,7 @@ export const ProductsBlock = styled(ProductsBlockContainer)`
 
     .sale {
       width: 67px;
-      height: 44px;
-      border-radius: 10px;
-      background-color: #f91155;
-      color: #f2f5f7;
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      align-content: space-around;
-      flex-direction: column;
       margin-left: 8px;
-      &:hover {
-        cursor: ${({ disabled }) => (disabled ? "default" : "pointer")};
-      }
     }
 
     .imageUrl {
