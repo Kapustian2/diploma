@@ -4,9 +4,13 @@ import { request } from "../../../utils";
 import { Input } from "../../../components";
 import { useDispatch } from "react-redux";
 import { deleteProduct, saveProductAsync } from "../../../actions";
+import { PAGINATION_LIMIT } from "../../../constants";
+import { Pagination } from "../../main/components";
 
 const ProductsBlockContainer = ({ className }) => {
   const [products, setProducts] = useState([]);
+  const [page, setPage] = useState(1);
+  const [lastPage, setLastPage] = useState(1);
   const [isEdit, setIsEdit] = useState(false);
   const [activeIndex, setActiveIndex] = useState(null);
 
@@ -48,10 +52,11 @@ const ProductsBlockContainer = ({ className }) => {
   };
 
   useEffect(() => {
-    request(`/products`)
+    request(`/products?&page=${page}&limit=${PAGINATION_LIMIT}`)
       .then((response) => {
-        if (Array.isArray(response.data)) {
+        if (response.data && Array.isArray(response.data)) {
           setProducts(response.data);
+          setLastPage(response.lastPage);
         } else {
           console.error("Некорректный формат данных:", response);
         }
@@ -59,8 +64,7 @@ const ProductsBlockContainer = ({ className }) => {
       .catch((error) => {
         console.error("Ошибка запроса на сервер:", error);
       });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [page]);
 
   return (
     <div className={className}>
@@ -153,6 +157,11 @@ const ProductsBlockContainer = ({ className }) => {
           </div>
         </div>
       ))}
+      <Pagination
+        page={page}
+        lastPage={lastPage}
+        setPage={setPage}
+      ></Pagination>
     </div>
   );
 };

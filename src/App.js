@@ -15,6 +15,7 @@ const AppColumn = styled.div`
   flex-direction: column;
   justify-content: space-between;
   min-height: 100%;
+  background-color: F7F8F9;
 `;
 
 const Footer = () => <div>Footer</div>;

@@ -1,10 +1,13 @@
 import { styled, withTheme } from "styled-components";
 import { request } from "../../utils";
 import { useEffect, useState } from "react";
-import { ProductCard } from "./components";
+import { Pagination, ProductCard } from "./components";
+import { PAGINATION_LIMIT } from "../../constants";
 
-const MainContainer = ({ className }) => {
+const MainContainer = ({ className, searchPhrase }) => {
   const [products, setProducts] = useState([]);
+  const [page, setPage] = useState(1);
+  const [lastPage, setLastPage] = useState(1);
   const [select, setSelect] = useState("");
 
   const handleSelectSort = (event) => {
@@ -12,10 +15,15 @@ const MainContainer = ({ className }) => {
   };
 
   useEffect(() => {
-    request(`/products`)
+    request(
+      `/products?search=${
+        !searchPhrase ? "" : searchPhrase
+      }&page=${page}&limit=${PAGINATION_LIMIT}`
+    )
       .then((response) => {
-        if (Array.isArray(response.data)) {
+        if (response.data && Array.isArray(response.data)) {
           setProducts(response.data);
+          setLastPage(response.lastPage);
         } else {
           console.error("Некорректный формат данных:", response);
         }
@@ -23,9 +31,8 @@ const MainContainer = ({ className }) => {
       .catch((error) => {
         console.error("Ошибка запроса на сервер:", error);
       });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-  console.log(products);
+  }, [page, searchPhrase]);
+
   return (
     <div className={className}>
       <div className="category">
@@ -78,6 +85,13 @@ const MainContainer = ({ className }) => {
               />
             </div>
           ))}
+        </div>
+        <div className="pagination">
+          <Pagination
+            page={page}
+            lastPage={lastPage}
+            setPage={setPage}
+          ></Pagination>
         </div>
       </div>
     </div>
