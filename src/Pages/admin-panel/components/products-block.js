@@ -8,6 +8,7 @@ import { PAGINATION_LIMIT } from "../../../constants";
 import { Pagination } from "../../main/components";
 
 const ProductsBlockContainer = ({ className }) => {
+  const [select, setSelect] = useState("");
   const [products, setProducts] = useState([]);
   const [page, setPage] = useState(1);
   const [lastPage, setLastPage] = useState(1);
@@ -96,15 +97,25 @@ const ProductsBlockContainer = ({ className }) => {
             }
             onChange={(event) => handleInputChange(event, index, "title")}
           />
-          <Input
-            className="category"
-            value={category}
-            borderRadius="10px"
-            disabled={
-              !isEdit || (activeIndex !== null && activeIndex !== index)
-            }
-            onChange={(event) => handleInputChange(event, index, "category")}
-          />
+          <div className="category">
+            <select
+              value={category}
+              {...("category",
+              {
+                onChange: () => null,
+              })}
+              disabled={
+                !isEdit || (activeIndex !== null && activeIndex !== index)
+              }
+              onChange={(event) => handleInputChange(event, index, "category")}
+            >
+              <option value="book">Книги</option>
+              <option value="life">Бытовые товары</option>
+              <option value="build">Строительство</option>
+              <option value="cloth">Одежда</option>
+              <option value="electro">Электроника</option>
+            </select>
+          </div>
           <Input
             className="price"
             value={price}
@@ -214,8 +225,17 @@ export const ProductsBlock = styled(ProductsBlockContainer)`
     }
 
     .category {
-      width: 220px;
       margin-left: 8px;
+
+      select {
+        width: 210px;
+        height: 44px;
+        font-size: 16px;
+        border-radius: 10px;
+        border: 1px solid #001a34;
+        background: #f91155;
+        color: #fff;
+      }
     }
 
     .price {

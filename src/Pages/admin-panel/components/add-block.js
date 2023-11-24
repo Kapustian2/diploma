@@ -108,7 +108,7 @@ const AddBlockContainer = ({ className }) => {
           onChange={handleSelect}
         >
           <option value="book">Книги</option>
-          <option value="bbit">Бытовые товары</option>
+          <option value="life">Бытовые товары</option>
           <option value="build">Строительство</option>
           <option value="cloth">Одежда</option>
           <option value="electro">Электроника</option>
