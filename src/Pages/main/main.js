@@ -13,6 +13,7 @@ const MainContainer = ({ className }) => {
   const [sort, setSort] = useState("cheap");
   const [lastPage, setLastPage] = useState(1);
   const [select, setSelect] = useState("");
+  const [category, setCategory] = useState("");
 
   const handleSelectSort = (event) => {
     const selectedValue = event.target.value;
@@ -20,11 +21,15 @@ const MainContainer = ({ className }) => {
     setSort(selectedValue);
   };
 
+  const handleClickCategory = (category) => () => {
+    setCategory(category);
+  };
+
   useEffect(() => {
     request(
       `/products?search=${
         !searchPhrase ? "" : searchPhrase
-      }&page=${page}&limit=${PAGINATION_LIMIT}&sort=${sort}`
+      }&page=${page}&limit=${PAGINATION_LIMIT}&sort=${sort}&category=${category}`
     )
       .then((response) => {
         if (response.data && Array.isArray(response.data)) {
@@ -37,7 +42,7 @@ const MainContainer = ({ className }) => {
       .catch((error) => {
         console.error("Ошибка запроса на сервер:", error);
       });
-  }, [page, searchPhrase, sort]);
+  }, [page, searchPhrase, sort, category]);
 
   return (
     <div className={className}>
@@ -46,23 +51,23 @@ const MainContainer = ({ className }) => {
           <h1>Категории</h1>
         </div>
         <div className="categories">
-          <div>
+          <div className="categor" onClick={handleClickCategory("book")}>
             <img src="/icon-menu-book.svg" />
             <span>Книги</span>
           </div>
-          <div>
+          <div className="categor" onClick={handleClickCategory("life")}>
             <img src="/icon-menu-life.svg" />
             <span>Бытовая техника</span>
           </div>
-          <div>
+          <div className="categor" onClick={handleClickCategory("build")}>
             <img src="/icon-menu-build.svg" />
             <span>Строительство</span>
           </div>
-          <div>
+          <div className="categor" onClick={handleClickCategory("cloth")}>
             <img src="/icon-menu-cloth.svg" />
             <span>Одежда</span>
           </div>
-          <div>
+          <div className="categor" onClick={handleClickCategory("electro")}>
             <img src="/icon-menu-electro.svg" />
             <span>Электроника</span>
           </div>
@@ -136,6 +141,15 @@ export const Main = styled(withTheme(MainContainer))`
     color: #fff;
     font-family: Inter;
     font-size: 24px;
+  }
+
+  .categor {
+    display: flex;
+    align-items: center;
+
+    &:hover {
+      cursor: ${({ disabled }) => (disabled ? "default" : "pointer")};
+    }
   }
 
   .products {
