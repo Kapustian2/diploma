@@ -14,6 +14,7 @@ const MainContainer = ({ className }) => {
   const [lastPage, setLastPage] = useState(1);
   const [select, setSelect] = useState("");
   const [category, setCategory] = useState("");
+  const [isSale, setIsSale] = useState(null);
 
   const handleSelectSort = (event) => {
     const selectedValue = event.target.value;
@@ -25,11 +26,17 @@ const MainContainer = ({ className }) => {
     setCategory(category);
   };
 
+  const handleClickSale = () => () => {
+    setIsSale(true);
+  };
+
   useEffect(() => {
     request(
       `/products?search=${
         !searchPhrase ? "" : searchPhrase
-      }&page=${page}&limit=${PAGINATION_LIMIT}&sort=${sort}&category=${category}`
+      }&page=${page}&limit=${PAGINATION_LIMIT}&sort=${sort}&category=${category}${
+        isSale !== null ? `&sale=${isSale}` : ""
+      }`
     )
       .then((response) => {
         if (response.data && Array.isArray(response.data)) {
@@ -42,7 +49,7 @@ const MainContainer = ({ className }) => {
       .catch((error) => {
         console.error("Ошибка запроса на сервер:", error);
       });
-  }, [page, searchPhrase, sort, category]);
+  }, [page, searchPhrase, sort, category, isSale]);
 
   return (
     <div className={className}>
@@ -72,7 +79,7 @@ const MainContainer = ({ className }) => {
             <span>Электроника</span>
           </div>
         </div>
-        <div className="sale-banner">
+        <div className="sale-banner" onClick={handleClickSale()}>
           <img src="/sale-banner.png" alt="sale-banner"></img>
         </div>
       </div>
@@ -178,6 +185,10 @@ export const Main = styled(withTheme(MainContainer))`
     height: 459px;
     flex-shrink: 0;
     margin-top: 140px;
+
+    &:hover {
+      cursor: ${({ disabled }) => (disabled ? "default" : "pointer")};
+    }
   }
 
   .pagination {
