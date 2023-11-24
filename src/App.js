@@ -9,6 +9,7 @@ import {
   Register,
   UserProfile,
 } from "./Pages";
+import { SearchProvider } from "./hooks/seacrh-provider";
 
 const AppColumn = styled.div`
   display: flex;
@@ -23,22 +24,24 @@ const Footer = () => <div>Footer</div>;
 function App() {
   return (
     <>
-      <AppColumn>
-        <Header />
-        <Routes>
-          <Route path="/" element={<Main />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/cart" element={<div>Корзина</div>} />
-          <Route path="/adminpanel" element={<AdminPanel />} />
-          <Route path="/products" element={<Product />} />
-          <Route path="/product" element={<div>Новый товар</div>} />
-          <Route path="/product/:productId" element={<Product />} />
-          <Route path="/profile/:userId" element={<UserProfile />} />
-          <Route path="*" element={<div>Страница 404</div>} />
-        </Routes>
-        <Footer />
-      </AppColumn>
+      <SearchProvider>
+        <AppColumn>
+          <Header />
+          <Routes>
+            <Route path="/" element={<Main />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="/cart" element={<div>Корзина</div>} />
+            <Route path="/adminpanel" element={<AdminPanel />} />
+            <Route path="/products" element={<Product />} />
+            <Route path="/product" element={<div>Новый товар</div>} />
+            <Route path="/product/:productId" element={<Product />} />
+            <Route path="/profile/:userId" element={<UserProfile />} />
+            <Route path="*" element={<div>Страница 404</div>} />
+          </Routes>
+          <Footer />
+        </AppColumn>
+      </SearchProvider>
     </>
   );
 }

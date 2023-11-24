@@ -56,7 +56,7 @@ const ProductsBlockContainer = ({ className }) => {
       .then((response) => {
         if (response.data && Array.isArray(response.data)) {
           setProducts(response.data);
-          setLastPage(response.lastPage);
+          setLastPage(response.pagination.lastPage);
         } else {
           console.error("Некорректный формат данных:", response);
         }
@@ -157,11 +157,9 @@ const ProductsBlockContainer = ({ className }) => {
           </div>
         </div>
       ))}
-      <Pagination
-        page={page}
-        lastPage={lastPage}
-        setPage={setPage}
-      ></Pagination>
+      <div className="pagination">
+        <Pagination page={page} lastPage={lastPage} setPage={setPage} />
+      </div>
     </div>
   );
 };
@@ -255,5 +253,10 @@ export const ProductsBlock = styled(ProductsBlockContainer)`
 
   input {
     text-align: center;
+  }
+
+  .pagination {
+    margin: 20px auto;
+    width: 70px;
   }
 `;

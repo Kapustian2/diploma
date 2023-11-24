@@ -3,8 +3,11 @@ import { request } from "../../utils";
 import { useEffect, useState } from "react";
 import { Pagination, ProductCard } from "./components";
 import { PAGINATION_LIMIT } from "../../constants";
+import { useSearch } from "../../hooks/seacrh-provider";
 
-const MainContainer = ({ className, searchPhrase }) => {
+const MainContainer = ({ className }) => {
+  const { searchPhrase } = useSearch();
+
   const [products, setProducts] = useState([]);
   const [page, setPage] = useState(1);
   const [lastPage, setLastPage] = useState(1);
@@ -87,11 +90,7 @@ const MainContainer = ({ className, searchPhrase }) => {
           ))}
         </div>
         <div className="pagination">
-          <Pagination
-            page={page}
-            lastPage={lastPage}
-            setPage={setPage}
-          ></Pagination>
+          <Pagination page={page} lastPage={lastPage} setPage={setPage} />
         </div>
       </div>
     </div>
@@ -153,6 +152,10 @@ export const Main = styled(withTheme(MainContainer))`
     height: 459px;
     flex-shrink: 0;
     margin-top: 140px;
+  }
+
+  .pagination {
+    margin: 20px auto;
   }
 
   h1 {

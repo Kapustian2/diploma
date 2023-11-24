@@ -2,26 +2,23 @@ import { styled, withTheme } from "styled-components";
 import { theme } from "../../Theme";
 import { Logo, Search, ControlPanel } from "./components";
 import { Link } from "react-router-dom";
-
 const HeaderContainer = ({ className }) => {
   return (
-    <>
-      <div className={className}>
-        <header className="block">
-          <div className="logo">
-            <Link to="/">
-              <Logo />
-            </Link>
-          </div>
-          <div className="search">
-            <Search />
-          </div>
-          <div className="control-panel">
-            <ControlPanel />
-          </div>
-        </header>
-      </div>
-    </>
+    <div className={className}>
+      <header className="block">
+        <div className="logo">
+          <Link to="/">
+            <Logo />
+          </Link>
+        </div>
+        <div className="search">
+          <Search />
+        </div>
+        <div className="control-panel">
+          <ControlPanel />
+        </div>
+      </header>
+    </div>
   );
 };
 
