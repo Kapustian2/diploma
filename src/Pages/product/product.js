@@ -89,7 +89,7 @@ const ProductContainer = ({ className }) => {
           {product.sale ? (
             <>
               <span className="price-with-sale">
-                {(product.price * (100 - product.sale)) / 100} ₽{" "}
+                {product.priceWithDiscount} ₽{" "}
               </span>
               <span className="price-wo-sale">{product.price} ₽ </span>
             </>

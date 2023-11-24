@@ -11,6 +11,7 @@ const ProductCardContainer = ({
   price,
   sale,
   imageUrl,
+  priceWithDiscount,
 }) => {
   const [isAddToCart, setIsAddToCart] = useState(false);
   const [isCounterVisible, setIsCounterVisible] = useState(false);
@@ -33,7 +34,7 @@ const ProductCardContainer = ({
         <img src={imageUrl} alt={title} className="image" />
         <div className="product-info">
           {sale ? (
-            <div className="price">{(price * (100 - sale)) / 100} ₽ </div>
+            <div className="price">{priceWithDiscount} ₽ </div>
           ) : (
             <div className="price">{price} ₽ </div>
           )}

@@ -76,18 +76,23 @@ const MainContainer = ({ className }) => {
           </select>
         </div>
         <div className="products">
-          {products.map(({ id, title, price, imageUrl, sale }) => (
-            <div>
-              <ProductCard
-                key={id}
-                id={id}
-                title={title}
-                imageUrl={imageUrl}
-                price={price}
-                sale={sale}
-              />
-            </div>
-          ))}
+          {products.map(
+            ({ id, title, price, imageUrl, sale, priceWithDiscount }) => {
+              return (
+                <div>
+                  <ProductCard
+                    key={id}
+                    id={id}
+                    title={title}
+                    imageUrl={imageUrl}
+                    price={price}
+                    sale={sale}
+                    priceWithDiscount={priceWithDiscount}
+                  />
+                </div>
+              );
+            }
+          )}
         </div>
         <div className="pagination">
           <Pagination page={page} lastPage={lastPage} setPage={setPage} />

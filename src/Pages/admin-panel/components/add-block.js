@@ -28,6 +28,8 @@ const productFormSchema = yup.object().shape({
 
 const AddBlockContainer = ({ className }) => {
   const [select, setSelect] = useState("");
+  const [priceWithDiscount, setPriceWithDiscount] = useState(0);
+
   const [serverError, setServerError] = useState(null);
   const [isSale, setIsSale] = useState(false);
   const dispatch = useDispatch();
@@ -41,11 +43,18 @@ const AddBlockContainer = ({ className }) => {
   };
 
   const onSubmit = ({ title, price, category, sale, imageUrl }) => {
+    const calculatedPriceWithDiscount = isSale
+      ? (price * (100 - sale)) / 100
+      : price;
+
+    setPriceWithDiscount(calculatedPriceWithDiscount);
+
     request("/products", "POST", {
       title,
       price,
       category,
       sale,
+      priceWithDiscount: calculatedPriceWithDiscount,
       imageUrl,
     }).then(({ error, product }) => {
       if (error) {
