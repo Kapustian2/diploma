@@ -105,7 +105,8 @@ export const Main = styled(withTheme(MainContainer))`
 
   .main-page {
     display: flex;
-    flex-wrap: wrap;
+    flex-direction: column;
+    width: 100%;
     margin-top: 20px;
     margin-left: 20px;
   }
@@ -134,7 +135,10 @@ export const Main = styled(withTheme(MainContainer))`
     flex-wrap: wrap;
   }
 
-  .sort-select select {
+  .sort-select {
+    display: flex;
+  }
+  select {
     width: 403px;
     height: 45px;
     flex-shrink: 0;

@@ -15,7 +15,6 @@ const AppColumn = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  min-height: 100%;
   background-color: F7F8F9;
 `;
 
