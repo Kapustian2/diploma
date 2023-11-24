@@ -10,18 +10,21 @@ const MainContainer = ({ className }) => {
 
   const [products, setProducts] = useState([]);
   const [page, setPage] = useState(1);
+  const [sort, setSort] = useState("cheap");
   const [lastPage, setLastPage] = useState(1);
   const [select, setSelect] = useState("");
 
   const handleSelectSort = (event) => {
-    setSelect(event.target.value);
+    const selectedValue = event.target.value;
+    setSelect(selectedValue);
+    setSort(selectedValue);
   };
 
   useEffect(() => {
     request(
       `/products?search=${
         !searchPhrase ? "" : searchPhrase
-      }&page=${page}&limit=${PAGINATION_LIMIT}`
+      }&page=${page}&limit=${PAGINATION_LIMIT}&sort=${sort}`
     )
       .then((response) => {
         if (response.data && Array.isArray(response.data)) {
@@ -34,7 +37,7 @@ const MainContainer = ({ className }) => {
       .catch((error) => {
         console.error("Ошибка запроса на сервер:", error);
       });
-  }, [page, searchPhrase]);
+  }, [page, searchPhrase, sort]);
 
   return (
     <div className={className}>
@@ -71,8 +74,8 @@ const MainContainer = ({ className }) => {
       <div className="main-page">
         <div className="sort-select">
           <select id="sort" value={select} onChange={handleSelectSort}>
-            <option value="option1">Сначала дешевые</option>
-            <option value="option2">Сначала дорогие</option>
+            <option value="cheap">Сначала дешевые</option>
+            <option value="expensive">Сначала дорогие</option>
           </select>
         </div>
         <div className="products">
