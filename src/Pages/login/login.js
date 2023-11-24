@@ -124,6 +124,7 @@ export const Login = styled(LoginContaner)`
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-top: 269px;
 
   .form-block {
     display: grid;

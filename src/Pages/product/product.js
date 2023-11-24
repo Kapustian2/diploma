@@ -106,6 +106,7 @@ export const Product = styled(ProductContainer)`
   display: flex;
   color: #001a34;
   font-family: Inter;
+  margin-top: 250px;
 
   .product-info {
     display: flex;

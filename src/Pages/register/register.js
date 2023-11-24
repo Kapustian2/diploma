@@ -154,6 +154,7 @@ export const Register = styled(RegisterContaner)`
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-top: 269px;
 
   .form-block {
     display: grid;

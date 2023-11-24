@@ -56,6 +56,7 @@ export const UserProfile = styled(UserProfileContainer)`
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-top: 269px;
 
   .user-info {
     place-content: center;
