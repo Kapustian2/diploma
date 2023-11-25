@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { Header } from "./components";
 import {
   AdminPanel,
+  Cart,
   Login,
   Main,
   Product,
@@ -15,10 +16,7 @@ const AppColumn = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  background-color: F7F8F9;
 `;
-
-const Footer = () => <div>Footer</div>;
 
 function App() {
   return (
@@ -30,7 +28,7 @@ function App() {
             <Route path="/" element={<Main />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
-            <Route path="/cart" element={<div>Корзина</div>} />
+            <Route path="/cart" element={<Cart />} />
             <Route path="/adminpanel" element={<AdminPanel />} />
             <Route path="/products" element={<Product />} />
             <Route path="/product" element={<div>Новый товар</div>} />
@@ -38,7 +36,6 @@ function App() {
             <Route path="/profile/:userId" element={<UserProfile />} />
             <Route path="*" element={<div>Страница 404</div>} />
           </Routes>
-          <Footer />
         </AppColumn>
       </SearchProvider>
     </>
