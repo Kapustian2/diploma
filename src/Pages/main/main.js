@@ -58,23 +58,38 @@ const MainContainer = ({ className }) => {
           <h1>Категории</h1>
         </div>
         <div className="categories">
-          <div className="categor" onClick={handleClickCategory("book")}>
+          <div
+            className={`categor ${category === "book" ? "selected" : ""}`}
+            onClick={handleClickCategory("book")}
+          >
             <img src="/icon-menu-book.svg" />
             <span>Книги</span>
           </div>
-          <div className="categor" onClick={handleClickCategory("life")}>
+          <div
+            className={`categor ${category === "life" ? "selected" : ""}`}
+            onClick={handleClickCategory("life")}
+          >
             <img src="/icon-menu-life.svg" />
             <span>Бытовая техника</span>
           </div>
-          <div className="categor" onClick={handleClickCategory("build")}>
+          <div
+            className={`categor ${category === "build" ? "selected" : ""}`}
+            onClick={handleClickCategory("build")}
+          >
             <img src="/icon-menu-build.svg" />
             <span>Строительство</span>
           </div>
-          <div className="categor" onClick={handleClickCategory("cloth")}>
+          <div
+            className={`categor ${category === "cloth" ? "selected" : ""}`}
+            onClick={handleClickCategory("cloth")}
+          >
             <img src="/icon-menu-cloth.svg" />
             <span>Одежда</span>
           </div>
-          <div className="categor" onClick={handleClickCategory("electro")}>
+          <div
+            className={`categor ${category === "electro" ? "selected" : ""}`}
+            onClick={handleClickCategory("electro")}
+          >
             <img src="/icon-menu-electro.svg" />
             <span>Электроника</span>
           </div>
@@ -153,6 +168,11 @@ export const Main = styled(withTheme(MainContainer))`
   .categor {
     display: flex;
     align-items: center;
+
+    &.selected {
+      background-color: #004d99;
+      color: #fff;
+    }
 
     &:hover {
       cursor: ${({ disabled }) => (disabled ? "default" : "pointer")};
