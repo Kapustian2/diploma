@@ -62,11 +62,16 @@ const ProductsBlockContainer = ({ className }) => {
         <span className="delete-all">Удалить выбранное</span>
       </div>
       <div className="line" />
-      <ProductCard />
       <div>
         {products.length > 0 ? (
           products.map((product, index) => (
-            <ProductCard title={product.details.title} />
+            <ProductCard
+              title={product.details.title}
+              imageUrl={product.details.imageUrl}
+              sale={product.details.sale}
+              price={product.details.price}
+              priceWithDiscount={product.details.priceWithDiscount}
+            />
           ))
         ) : (
           <div>Loading...</div>

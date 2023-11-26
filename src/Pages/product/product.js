@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, useMatch, useParams } from "react-router-dom";
 import styled from "styled-components";
 import { loadProductAsync } from "../../actions";
-import { Button } from "../../components";
-import { SaleBadge } from "./components";
+import { Button, SaleBadge } from "../../components";
+import { selectUserId } from "../../selectors";
 
 const ProductContainer = ({ className }) => {
   const [error, setError] = useState(null);
@@ -13,6 +13,7 @@ const ProductContainer = ({ className }) => {
   const dispatch = useDispatch();
   const isCreating = !!useMatch("/product");
   const params = useParams();
+  const userId = useSelector(selectUserId);
 
   useEffect(() => {
     if (isCreating) {
@@ -63,7 +64,7 @@ const ProductContainer = ({ className }) => {
               Sale
             </SaleBadge>
           ) : null}
-          <Link to="/cart">
+          <Link to={`/cart/${userId}`}>
             {product.sale ? (
               <Button
                 width="344px"

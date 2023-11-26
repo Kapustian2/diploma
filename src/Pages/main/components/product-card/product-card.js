@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { ButtonToAddCart, CounterToCart } from "./components";
 import { useState } from "react";
-import { SaleBadge } from "../../../product/components";
+import { SaleBadge } from "../../../../components";
 
 const ProductCardContainer = ({
   className,
