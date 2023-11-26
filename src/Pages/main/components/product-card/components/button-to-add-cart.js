@@ -1,10 +1,45 @@
 import { styled } from "styled-components";
 import { Button } from "../../../../../components/button/button";
+import { useSelector } from "react-redux";
+import { selectUserId } from "../../../../../selectors";
+import { request } from "../../../../../utils";
+import { useState } from "react";
+import { useParams } from "react-router-dom";
 
-const ButtonToAddCartContainer = ({ ...props }) => {
+const ButtonToAddCartContainer = ({
+  children,
+  fontSize,
+  productId,
+  ...props
+}) => {
+  const [isAddToCart, setIsAddToCart] = useState(false);
+  const params = useParams();
+
+  const userId = useSelector(selectUserId);
+
+  const handleClick = () => {
+    setIsAddToCart(true);
+    const data = {
+      userId,
+      productId,
+    };
+
+    request("/addtocart", "POST", data).then(({ error, product }) => {
+      if (error) {
+        return;
+      }
+    });
+  };
+
   return (
-    <Button width="217px" height="44px" fontSize="16px" {...props}>
-      <div className="text">Добавить в корзину</div>
+    <Button
+      width="217px"
+      height="44px"
+      fontSize={fontSize}
+      onClick={handleClick}
+      {...props}
+    >
+      <div className="text">{children}</div>
     </Button>
   );
 };

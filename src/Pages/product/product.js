@@ -4,7 +4,8 @@ import { Link, useMatch, useParams } from "react-router-dom";
 import styled from "styled-components";
 import { loadProductAsync } from "../../actions";
 import { Button, SaleBadge } from "../../components";
-import { selectUserId } from "../../selectors";
+import { SelectUserAuth, selectUserId } from "../../selectors";
+import { ButtonToAddCart } from "../main/components/product-card/components";
 
 const ProductContainer = ({ className }) => {
   const [error, setError] = useState(null);
@@ -14,6 +15,7 @@ const ProductContainer = ({ className }) => {
   const isCreating = !!useMatch("/product");
   const params = useParams();
   const userId = useSelector(selectUserId);
+  const auth = useSelector(SelectUserAuth);
 
   useEffect(() => {
     if (isCreating) {
@@ -66,23 +68,27 @@ const ProductContainer = ({ className }) => {
           ) : null}
           <Link to={`/cart/${userId}`}>
             {product.sale ? (
-              <Button
+              <ButtonToAddCart
                 width="344px"
                 height="88px"
                 fontSize="40px"
                 className="button-with-sale"
+                disabled={!auth}
+                productId={product.id}
               >
                 Купить
-              </Button>
+              </ButtonToAddCart>
             ) : (
-              <Button
+              <ButtonToAddCart
                 width="344px"
                 height="88px"
                 fontSize="40px"
                 className="button-wo-sale"
+                disabled={!auth}
+                productId={product.id}
               >
                 Купить
-              </Button>
+              </ButtonToAddCart>
             )}
           </Link>
         </div>

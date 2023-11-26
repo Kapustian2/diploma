@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import { ButtonToAddCart, CounterToCart } from "./components";
+import { ButtonToAddCart } from "./components";
 import { useState } from "react";
 import { SaleBadge } from "../../../../components";
 
@@ -14,12 +14,6 @@ const ProductCardContainer = ({
   priceWithDiscount,
 }) => {
   const [isAddToCart, setIsAddToCart] = useState(false);
-  const [isCounterVisible, setIsCounterVisible] = useState(false);
-
-  const handleClick = () => {
-    setIsAddToCart((prevState) => !prevState);
-    setIsCounterVisible(true);
-  };
 
   return (
     <div className={className}>
@@ -42,18 +36,9 @@ const ProductCardContainer = ({
         </div>
       </Link>
 
-      {isCounterVisible ? (
-        <CounterToCart
-          onClick={handleClick}
-          onCounterEmpty={() => setIsCounterVisible(false)}
-        >
-          Добавлено в корзину
-        </CounterToCart>
-      ) : (
-        <ButtonToAddCart onClick={handleClick}>
-          Добавить в корзину
-        </ButtonToAddCart>
-      )}
+      <ButtonToAddCart disabled={isAddToCart} productId={id}>
+        {isAddToCart ? "Добавлено в корзину" : "Добавить в корзину"}
+      </ButtonToAddCart>
     </div>
   );
 };
@@ -100,5 +85,10 @@ export const ProductCard = styled(ProductCardContainer)`
   .image {
     width: 241px;
     height: 241px;
+  }
+
+  .ButtonToAddCart:disabled {
+    background-color: #ccc; /* Цвет фона для неактивной кнопки */
+    cursor: not-allowed; /* Изменение курсора для неактивной кнопки */
   }
 `;
