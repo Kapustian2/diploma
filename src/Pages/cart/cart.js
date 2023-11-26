@@ -30,8 +30,6 @@ export const CartContainer = ({ className }) => {
 
         Promise.all(productDetailPromises)
           .then((productDetails) => {
-            console.log("Дополнительные данные о продуктах:", productDetails);
-
             const productsWithDetails = productData.data.products.map(
               (product, index) => ({
                 details: productDetails[index]
