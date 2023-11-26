@@ -3,6 +3,8 @@ import styled from "styled-components";
 import { ButtonToAddCart } from "./components";
 import { useState } from "react";
 import { SaleBadge } from "../../../../components";
+import { useSelector } from "react-redux";
+import { SelectUserAuth } from "../../../../selectors";
 
 const ProductCardContainer = ({
   className,
@@ -14,6 +16,11 @@ const ProductCardContainer = ({
   priceWithDiscount,
 }) => {
   const [isAddToCart, setIsAddToCart] = useState(false);
+  const auth = useSelector(SelectUserAuth);
+
+  const handleClick = () => {
+    setIsAddToCart(true);
+  };
 
   return (
     <div className={className}>
@@ -35,10 +42,11 @@ const ProductCardContainer = ({
           <div className="title">{title}</div>
         </div>
       </Link>
-
-      <ButtonToAddCart disabled={isAddToCart} productId={id}>
-        {isAddToCart ? "Добавлено в корзину" : "Добавить в корзину"}
-      </ButtonToAddCart>
+      <div onClick={handleClick}>
+        <ButtonToAddCart disabled={isAddToCart || !auth} productId={id}>
+          {isAddToCart ? "Добавлено в корзину" : "Добавить в корзину"}
+        </ButtonToAddCart>
+      </div>
     </div>
   );
 };

@@ -18,14 +18,17 @@ const ButtonToAddCartContainer = ({
   const userId = useSelector(selectUserId);
 
   const handleClick = () => {
-    setIsAddToCart(true);
     const data = {
       userId,
       productId,
     };
 
-    request("/addtocart", "POST", data).then(({ error, product }) => {
+    request("/addtocart", "POST", data).then((response) => {
+      console.log("Response:", response);
+
+      const { error } = response;
       if (error) {
+        console.error("Error:", error);
         return;
       }
     });
