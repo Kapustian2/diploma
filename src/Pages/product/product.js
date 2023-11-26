@@ -59,8 +59,19 @@ const ProductContainer = ({ className }) => {
           </div>
           <div className="category">
             <p>Категория: </p>
-            {product.category}
+            {product.category === "electro"
+              ? "Электроника"
+              : product.category === "book"
+              ? "Книга"
+              : product.category === "cloth"
+              ? "Одежда"
+              : product.category === "build"
+              ? "Строительные товары"
+              : product.category === "life"
+              ? "Бытовые товары"
+              : product.category}
           </div>
+
           {product.sale ? (
             <SaleBadge width="102px" height="49px">
               Sale
