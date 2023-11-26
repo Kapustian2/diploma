@@ -66,10 +66,7 @@ const ProductsBlockContainer = ({ className }) => {
       <div>
         {products.length > 0 ? (
           products.map((product, index) => (
-            <div>
-              <div key={index}>{product.details.title}</div>
-              <div key={index}>{product.details.price}</div>
-            </div>
+            <ProductCard title={product.details.title} />
           ))
         ) : (
           <div>Loading...</div>

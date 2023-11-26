@@ -1,7 +1,11 @@
 import styled from "styled-components";
 
-const ProductCardContainer = () => {
-  return null;
+const ProductCardContainer = ({ title }) => {
+  return (
+    <div>
+      <div>{title}</div>
+    </div>
+  );
 };
 
 export const ProductCard = styled(ProductCardContainer)``;
