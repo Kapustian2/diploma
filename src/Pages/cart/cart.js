@@ -1,8 +1,16 @@
 import styled from "styled-components";
-import { Button } from "../../components";
 import { BuyBlock, ProductsBlock } from "./components";
+import { useSelector } from "react-redux";
+import { SelectUserAuth } from "../../selectors";
+import { Navigate } from "react-router-dom";
 
 export const CartContainer = ({ className }) => {
+  const auth = useSelector(SelectUserAuth);
+
+  if (!auth) {
+    return <Navigate to="/" />;
+  }
+
   return (
     <div className={className}>
       <div className="cart-label">Корзина</div>

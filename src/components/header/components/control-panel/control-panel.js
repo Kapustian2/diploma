@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import {
   SelectUserAuth,
   SelectUserRole,
+  selectUserId,
   selectUserLogin,
 } from "../../../../selectors";
 import styled from "styled-components";
@@ -12,6 +13,7 @@ const ControlPanelContainer = ({ className }) => {
   const auth = useSelector(SelectUserAuth);
   const login = useSelector(selectUserLogin);
   const role = useSelector(SelectUserRole);
+  const userId = useSelector(selectUserId);
 
   return (
     <div className={className}>
@@ -24,7 +26,7 @@ const ControlPanelContainer = ({ className }) => {
         </Link>
       ) : null}
       {auth ? (
-        <Link to="/profile/:userId">
+        <Link to={`/profile/${userId}`}>
           <div className="link-content">
             <img src="/icon-person.svg" />
             <span className="link-text">{login}</span>
@@ -38,7 +40,7 @@ const ControlPanelContainer = ({ className }) => {
           </div>
         </Link>
       )}
-      <Link to="/cart" className="link">
+      <Link to={`/cart/${userId}`} className="link">
         <div className="link-content">
           <img src="/icon-shopping-cart.svg" />
 

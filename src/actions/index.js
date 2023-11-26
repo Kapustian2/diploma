@@ -5,3 +5,5 @@ export * from "./load-product-async";
 export * from "./set-product";
 export * from "./save-product";
 export * from "./delete-product";
+export * from "./load-products-async";
+export * from "./set-products.js";
