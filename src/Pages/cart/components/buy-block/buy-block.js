@@ -32,7 +32,7 @@ const BuyBlockContainer = ({ className, products }) => {
         </div>
         <div className="discount">
           <div className="discount-label">Скидка</div>
-          <div className="discount-value">{totalDiscount} ₽</div>
+          <div className="discount-value">- {totalDiscount} ₽</div>
         </div>
         <div className="total">
           <div className="total-label">Итого:</div>
