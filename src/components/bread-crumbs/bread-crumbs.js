@@ -11,7 +11,6 @@ const BreadCrumbsContainer = ({ className }) => {
     .filter((crumb) => crumb !== "")
     .map((crumb) => {
       currentLink = `${currentLink}/${crumb}`;
-      // crumb = `/` + crumb;
 
       return (
         <div
