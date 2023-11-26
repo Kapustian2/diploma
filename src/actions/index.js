@@ -7,3 +7,5 @@ export * from "./save-product";
 export * from "./delete-product";
 export * from "./load-products-async";
 export * from "./set-products.js";
+export * from "./delete-products-in-cart.js";
+export * from "./delete-product-in-cart";

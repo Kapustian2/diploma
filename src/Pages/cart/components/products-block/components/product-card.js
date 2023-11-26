@@ -1,17 +1,41 @@
 import styled from "styled-components";
 import { CheckBox, SaleBadge } from "../../../../../components";
+import { useDispatch, useSelector } from "react-redux";
+import { deleteProductInCart } from "../../../../../actions";
+import { selectUserId } from "../../../../../selectors";
+import { useEffect, useState } from "react";
 
 const ProductCardContainer = ({
   className,
+  id,
   title,
   imageUrl,
   sale,
   price,
   priceWithDiscount,
+  isSelected,
+  onSelect,
 }) => {
+  const dispatch = useDispatch();
+  const userId = useSelector(selectUserId);
+  const [cartUpdated, setCartUpdated] = useState(false);
+
+  const handleDelete = () => {
+    if (userId) {
+      dispatch(deleteProductInCart(userId, id)).then(() => {
+        setCartUpdated(true);
+      });
+    }
+  };
+
+  useEffect(() => {
+    if (cartUpdated) {
+      setCartUpdated(false);
+    }
+  }, [cartUpdated]);
   return (
     <div className={className}>
-      <CheckBox />
+      <CheckBox checked={isSelected} onChange={onSelect} />
       <img src={imageUrl} alt={title} className="image" />
       <div className="sides">
         <div className="left-side">
@@ -25,6 +49,7 @@ const ProductCardContainer = ({
             src="/delete-from-cart-icon.png"
             alt="garbage"
             className="garbage"
+            onClick={handleDelete}
           />
         </div>
 
@@ -56,6 +81,9 @@ export const ProductCard = styled(ProductCardContainer)`
   .garbage {
     width: 25px;
     height: 25px;
+    &:hover {
+      cursor: ${({ disabled }) => (disabled ? "default" : "pointer")};
+    }
   }
 
   .sides {
