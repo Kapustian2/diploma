@@ -3,11 +3,10 @@ import { CheckBox } from "../../../../components";
 import { ProductCard } from "./components";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { deleteProductInCart } from "../../../../actions";
+import { deleteProductsInCart } from "../../../../actions";
 import { selectUserId } from "../../../../selectors";
 
 const ProductsBlockContainer = ({ className, products }) => {
-  const [selectAll, setSelectAll] = useState(false);
   const [selectedProducts, setSelectedProducts] = useState([]);
   const [product, setProduct] = useState("");
   const dispatch = useDispatch();
@@ -28,13 +27,9 @@ const ProductsBlockContainer = ({ className, products }) => {
   };
 
   const handleDelete = () => {
-    if (selectedProducts.length === 0) {
-      return;
+    if (userId) {
+      dispatch(deleteProductsInCart(userId, selectedProducts)).then(() => {});
     }
-
-    dispatch(deleteProductInCart(userId, selectedProducts)).then(() => {
-      setSelectedProducts([]);
-    });
   };
 
   return (
@@ -65,6 +60,8 @@ const ProductsBlockContainer = ({ className, products }) => {
               onSelect={() => handleSelectProduct(product.details.id)}
             />
           ))
+        ) : product.length === 0 ? (
+          <div>Корзина пустая</div>
         ) : (
           <div>Loading...</div>
         )}

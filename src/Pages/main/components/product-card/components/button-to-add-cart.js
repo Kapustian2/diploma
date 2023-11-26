@@ -24,8 +24,6 @@ const ButtonToAddCartContainer = ({
     };
 
     request("/addtocart", "POST", data).then((response) => {
-      console.log("Response:", response);
-
       const { error } = response;
       if (error) {
         console.error("Error:", error);
