@@ -8,7 +8,6 @@ import { PAGINATION_LIMIT } from "../../../constants";
 import { Pagination } from "../../main/components";
 
 const ProductsBlockContainer = ({ className }) => {
-  const [select, setSelect] = useState("");
   const [products, setProducts] = useState([]);
   const [page, setPage] = useState(1);
   const [lastPage, setLastPage] = useState(1);

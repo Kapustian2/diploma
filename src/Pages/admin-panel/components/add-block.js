@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Button, CheckBox, FormField, Input } from "../../../components";
+import { Button, CheckBox, FormField } from "../../../components";
 import styled from "styled-components";
 import { request } from "../../../utils";
 import { setProduct } from "../../../actions";

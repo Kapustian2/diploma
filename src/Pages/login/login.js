@@ -8,8 +8,7 @@ import { request } from "../../utils";
 import { useDispatch, useSelector } from "react-redux";
 import { setUser } from "../../actions";
 import { useState } from "react";
-import { ROLE } from "../../constants";
-import { SelectUserAuth, SelectUserRole } from "../../selectors";
+import { SelectUserAuth } from "../../selectors";
 
 const StyledLink = styled(Link)`
   text-align: center;

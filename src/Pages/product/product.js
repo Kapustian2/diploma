@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useMatch, useParams } from "react-router-dom";
 import styled from "styled-components";
 import { loadProductAsync } from "../../actions";
-import { Button, SaleBadge } from "../../components";
+import { SaleBadge } from "../../components";
 import { SelectUserAuth, selectUserId } from "../../selectors";
 import { ButtonToAddCart } from "../main/components/product-card/components";
 

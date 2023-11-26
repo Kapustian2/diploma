@@ -3,8 +3,6 @@ import { Button } from "../../../../../components/button/button";
 import { useSelector } from "react-redux";
 import { selectUserId } from "../../../../../selectors";
 import { request } from "../../../../../utils";
-import { useState } from "react";
-import { useParams } from "react-router-dom";
 
 const ButtonToAddCartContainer = ({
   children,
@@ -12,9 +10,6 @@ const ButtonToAddCartContainer = ({
   productId,
   ...props
 }) => {
-  const [isAddToCart, setIsAddToCart] = useState(false);
-  const params = useParams();
-
   const userId = useSelector(selectUserId);
 
   const handleClick = () => {
