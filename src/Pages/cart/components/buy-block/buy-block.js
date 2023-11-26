@@ -2,16 +2,43 @@ import React from "react";
 import { Button } from "../../../../components";
 import styled from "styled-components";
 
-const BuyBlockContainer = ({ className }) => {
+const BuyBlockContainer = ({ className, products }) => {
+  const totalAmount = products.reduce((accumulator, product) => {
+    return accumulator + (product.details ? product.details.price : 0);
+  }, 0);
+
+  const totalDiscount = products.reduce((accumulator, product) => {
+    const price = product.details.price;
+    const discountPrice = product.details.priceWithDiscount;
+    const discount = price - discountPrice;
+
+    return accumulator + discount;
+  }, 0);
+
+  const totalPrice = totalAmount - totalDiscount;
+
   return (
     <div className={className}>
       <Button width="555px" height="69px" background="#10C44C">
         Перейти к оформлению
       </Button>
       <label className="u-cart">Ваша корзина</label>
-      <label className="products">Товары</label>
-      <label className="discount">Скидка</label>
-      <label className="total">Итого:</label>
+      <div className="content-container">
+        <div className="products">
+          <label>Товары ({products.length})</label>
+          <div className="amount">
+            <label>{totalAmount} ₽</label>
+          </div>
+        </div>
+        <div className="discount">
+          <div className="discount-label">Скидка</div>
+          <div className="discount-value">{totalDiscount} ₽</div>
+        </div>
+        <div className="total">
+          <div className="total-label">Итого:</div>
+          <div className="total-value">{totalPrice} ₽</div>
+        </div>
+      </div>
     </div>
   );
 };
@@ -37,12 +64,43 @@ export const BuyBlock = styled(BuyBlockContainer)`
     font-weight: 700;
   }
 
+  .content-container {
+    display: flex;
+    flex-direction: column;
+  }
+
   .products {
+    width: 555px;
     margin: 27px 0 0 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .amount {
+    margin-left: auto;
+    margin-right: 22px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
   }
 
   .discount {
     margin: 25px 0 0 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .discount-label {
+    margin-right: 10px;
+  }
+
+  .discount-value {
+    margin-left: auto;
+    color: red;
+    font-size: 20px;
+    font-weight: 700;
   }
 
   .total {
@@ -51,5 +109,16 @@ export const BuyBlock = styled(BuyBlockContainer)`
     font-style: normal;
     font-weight: 700;
     line-height: normal;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .total-label {
+    margin-right: 10px;
+  }
+
+  .total-value {
+    margin-left: auto;
   }
 `;

@@ -8,53 +8,7 @@ import { useParams } from "react-router-dom";
 import { selectUserId } from "../../../../selectors";
 import { loadProductsAsync } from "../../../../actions";
 
-const ProductsBlockContainer = ({ className }) => {
-  const [products, setProducts] = useState([]);
-  const [error, setError] = useState(null);
-  const userId = useSelector(selectUserId);
-  const dispatch = useDispatch();
-  const params = useParams();
-
-  useEffect(() => {
-    dispatch(loadProductsAsync(params.userId)).then((productData) => {
-      setError(productData.error);
-
-      if (productData.data) {
-        const productIds = productData.data.products.map(
-          (product) => product.productId
-        );
-
-        const productDetailPromises = productIds.map((productId) =>
-          request(`/products/${productId}`)
-        );
-
-        Promise.all(productDetailPromises)
-          .then((productDetails) => {
-            console.log("Дополнительные данные о продуктах:", productDetails);
-
-            const productsWithDetails = productData.data.products.map(
-              (product, index) => ({
-                details: productDetails[index]
-                  ? productDetails[index].data
-                  : null,
-              })
-            );
-
-            setProducts(productsWithDetails);
-          })
-          .catch((error) => {
-            console.error(
-              "Ошибка при запросе дополнительных данных о продуктах:",
-              error
-            );
-          });
-      } else {
-      }
-    });
-  }, [dispatch, params.userId]);
-
-  console.log("products", products);
-
+const ProductsBlockContainer = ({ className, products }) => {
   return (
     <div className={className}>
       <div className="header">
