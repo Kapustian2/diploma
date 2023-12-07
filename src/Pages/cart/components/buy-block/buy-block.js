@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import { Button } from "../../../../components";
 import styled from "styled-components";
 
 const BuyBlockContainer = ({ className, products }) => {
+  const [buttonClicked, setButtonClicked] = useState(false);
+
   const totalAmount = products.reduce((accumulator, product) => {
     return accumulator + (product.details ? product.details.price : 0);
   }, 0);
@@ -17,10 +19,19 @@ const BuyBlockContainer = ({ className, products }) => {
 
   const totalPrice = totalAmount - totalDiscount;
 
+  const handleButtonClick = () => {
+    setButtonClicked(true);
+  };
+
   return (
     <div className={className}>
-      <Button width="555px" height="69px" background="#10C44C">
-        Перейти к оформлению
+      <Button
+        width="555px"
+        height="69px"
+        background={buttonClicked ? "#FF0000" : "#10C44C"}
+        onClick={handleButtonClick}
+      >
+        {!buttonClicked ? "Перейти к оформлению" : "В данный момент недоступно"}
       </Button>
       <label className="u-cart">Ваша корзина</label>
       <div className="content-container">
