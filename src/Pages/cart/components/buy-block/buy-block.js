@@ -6,12 +6,12 @@ const BuyBlockContainer = ({ className, products }) => {
   const [buttonClicked, setButtonClicked] = useState(false);
 
   const totalAmount = products.reduce((accumulator, product) => {
-    return accumulator + (product.details ? product.details.price : 0);
+    return accumulator + (product ? product.data.price : 0);
   }, 0);
 
   const totalDiscount = products.reduce((accumulator, product) => {
-    const price = product.details.price;
-    const discountPrice = product.details.priceWithDiscount;
+    const price = product.data.price;
+    const discountPrice = product.data.priceWithDiscount;
     const discount = price - discountPrice;
 
     return accumulator + discount;

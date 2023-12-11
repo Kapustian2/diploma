@@ -1,9 +1,8 @@
 import styled from "styled-components";
-import { CheckBox, SaleBadge } from "../../../../../components";
-import { useDispatch, useSelector } from "react-redux";
-import { deleteProductInCart } from "../../../../../actions";
-import { selectUserId } from "../../../../../selectors";
+import { SaleBadge } from "../../../../../components";
+import { useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
+import { deleteProductInCart } from "../../../../../actions";
 
 const ProductCardContainer = ({
   className,
@@ -13,21 +12,14 @@ const ProductCardContainer = ({
   sale,
   price,
   priceWithDiscount,
-  isSelected,
-  onSelect,
 }) => {
   const dispatch = useDispatch();
-  const userId = useSelector(selectUserId);
   const [cartUpdated, setCartUpdated] = useState(false);
 
   const handleDelete = () => {
-    if (userId) {
-      dispatch(deleteProductInCart(userId, id)).then(() => {
-        setCartUpdated(true);
-      });
-    }
+    dispatch(deleteProductInCart(id));
+    setCartUpdated(true);
   };
-
   useEffect(() => {
     if (cartUpdated) {
       setCartUpdated(false);
@@ -35,7 +27,6 @@ const ProductCardContainer = ({
   }, [cartUpdated]);
   return (
     <div className={className}>
-      <CheckBox checked={isSelected} onChange={onSelect} />
       <img src={imageUrl} alt={title} className="image" />
       <div className="sides">
         <div className="left-side">
@@ -72,6 +63,7 @@ const ProductCardContainer = ({
 
 export const ProductCard = styled(ProductCardContainer)`
   display: flex;
+  margin-bottom: 30px;
 
   .image {
     width: 194px;

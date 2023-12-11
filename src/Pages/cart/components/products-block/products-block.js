@@ -1,47 +1,21 @@
 import styled from "styled-components";
-import { CheckBox } from "../../../../components";
 import { ProductCard } from "./components";
-import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { deleteProductsInCart } from "../../../../actions";
+import { deleteProductInCart, deleteProductsInCart } from "../../../../actions";
 import { selectUserId } from "../../../../selectors";
 
 const ProductsBlockContainer = ({ className, products }) => {
-  const [selectedProducts, setSelectedProducts] = useState([]);
-  const [product, setProduct] = useState("");
   const dispatch = useDispatch();
-  const userId = useSelector(selectUserId);
-
-  const handleSelectAll = () => {
-    setSelectedProducts(products.map((product) => product.details.id));
-  };
-
-  const handleSelectProduct = (id) => {
-    setSelectedProducts((prevSelectedProducts) => {
-      if (prevSelectedProducts.includes(id)) {
-        return prevSelectedProducts.filter((item) => item !== id);
-      } else {
-        return [...prevSelectedProducts, id];
-      }
-    });
-  };
 
   const handleDelete = () => {
-    if (userId) {
-      dispatch(deleteProductsInCart(userId, selectedProducts)).then(() => {});
-    }
+    dispatch(deleteProductsInCart());
   };
 
   return (
     <div className={className}>
       <div className="header">
-        <CheckBox
-          checked={selectedProducts.length === products.length}
-          onChange={handleSelectAll}
-        />
-        Выбрать всё
         <span className="delete-all" onClick={handleDelete}>
-          Удалить выбранное
+          Удалить всё
         </span>
       </div>
       <div className="line" />
@@ -50,20 +24,16 @@ const ProductsBlockContainer = ({ className, products }) => {
           products.map((product, index) => (
             <ProductCard
               key={index}
-              id={product.details.id}
-              title={product.details.title}
-              imageUrl={product.details.imageUrl}
-              sale={product.details.sale}
-              price={product.details.price}
-              priceWithDiscount={product.details.priceWithDiscount}
-              isSelected={selectedProducts.includes(product.details.id)}
-              onSelect={() => handleSelectProduct(product.details.id)}
+              id={product.data.id}
+              title={product.data.title}
+              imageUrl={product.data.imageUrl}
+              sale={product.data.sale}
+              price={product.data.price}
+              priceWithDiscount={product.data.priceWithDiscount}
             />
           ))
-        ) : product.length === 0 ? (
-          <div>Корзина пустая</div>
         ) : (
-          <div>Loading...</div>
+          <div>Корзина пустая</div>
         )}
       </div>
     </div>

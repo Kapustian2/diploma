@@ -4,52 +4,37 @@ import { useDispatch, useSelector } from "react-redux";
 import { SelectUserAuth, selectUserId } from "../../selectors";
 import { Navigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { loadProductsAsync } from "../../actions";
+import { loadProductAsync, loadProductsAsync } from "../../actions";
 import { request } from "../../utils";
+import { selectUserCartProductIds } from "../../selectors/select-products-id";
 
 export const CartContainer = ({ className }) => {
   const [products, setProducts] = useState([]);
   const [error, setError] = useState(null);
-  const userId = useSelector(selectUserId);
   const dispatch = useDispatch();
-  const params = useParams();
+  const [productsData, setProductsData] = useState([]);
   const auth = useSelector(SelectUserAuth);
+  const productsInCart = useSelector(selectUserCartProductIds);
 
   useEffect(() => {
-    dispatch(loadProductsAsync(params.userId)).then((productData) => {
-      setError(productData.error);
-
-      if (productData.data) {
-        const productIds = productData.data.products.map(
-          (product) => product.productId
+    const fetchProducts = async () => {
+      try {
+        const productsData = await Promise.all(
+          productsInCart.map((productId) =>
+            dispatch(loadProductsAsync(productId))
+          )
         );
 
-        const productDetailPromises = productIds.map((productId) =>
-          request(`/products/${productId}`)
-        );
-
-        Promise.all(productDetailPromises)
-          .then((productDetails) => {
-            const productsWithDetails = productData.data.products.map(
-              (product, index) => ({
-                details: productDetails[index]
-                  ? productDetails[index].data
-                  : null,
-              })
-            );
-
-            setProducts(productsWithDetails);
-          })
-          .catch((error) => {
-            console.error(
-              "Ошибка при запросе дополнительных данных о продуктах:",
-              error
-            );
-          });
-      } else {
+        setProductsData(productsData);
+      } catch (error) {
+        setError(error);
       }
-    });
-  }, [dispatch, params.userId]);
+    };
+
+    fetchProducts();
+  }, [dispatch, productsInCart]);
+
+  console.log(productsData);
 
   if (!auth) {
     return <Navigate to="/" />;
@@ -60,9 +45,9 @@ export const CartContainer = ({ className }) => {
       <div className="cart-label">Корзина</div>
       <div className="block">
         <div className="products-block">
-          <ProductsBlock products={products} />
+          <ProductsBlock products={productsData} />
         </div>
-        <BuyBlock products={products} />
+        <BuyBlock products={productsData} />
       </div>
     </div>
   );

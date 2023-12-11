@@ -1,8 +1,9 @@
 import { styled } from "styled-components";
 import { Button } from "../../../../../components/button/button";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { selectUserId } from "../../../../../selectors";
 import { request } from "../../../../../utils";
+import { addToCart } from "../../../../../actions";
 
 const ButtonToAddCartContainer = ({
   children,
@@ -11,6 +12,7 @@ const ButtonToAddCartContainer = ({
   ...props
 }) => {
   const userId = useSelector(selectUserId);
+  const dispatch = useDispatch();
 
   const handleClick = () => {
     const data = {
@@ -19,11 +21,16 @@ const ButtonToAddCartContainer = ({
     };
 
     request("/addtocart", "POST", data).then((response) => {
-      const { error } = response;
+      const { error, addedProduct } = response;
       if (error) {
         console.error("Error:", error);
         return;
       }
+      const productData = {
+        id: productId,
+      };
+
+      dispatch(addToCart({ product: productData }));
     });
   };
 

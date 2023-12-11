@@ -1,11 +1,11 @@
 import { request } from "../utils/request";
-import { setProducts } from "./set-products";
+import { setProductData } from "./set-product-data";
 
-export const loadProductsAsync = (userId) => (dispatch) =>
-  request(`/cart/${userId}`).then((productsData) => {
-    if (productsData.data) {
-      dispatch(setProducts(productsData.data));
+export const loadProductsAsync = (productId) => (dispatch) =>
+  request(`/products/${productId}`).then((postData) => {
+    if (postData.data) {
+      dispatch(setProductData(postData.data));
     }
 
-    return productsData;
+    return postData;
   });

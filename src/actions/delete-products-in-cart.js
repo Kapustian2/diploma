@@ -1,6 +1,6 @@
-import { request } from "../utils";
+import { ACTION_TYPE } from "./action-type";
 
-export const deleteProductsInCart = (userId, selectedProducts) => () =>
-  request(`/carts/${userId}`, "DELETE", {
-    products: selectedProducts.map((product) => ({ productId: product })),
-  });
+export const deleteProductsInCart = (product) => ({
+  type: ACTION_TYPE.DELETE_PRODUCTS_FROM_CART,
+  payload: { product },
+});
